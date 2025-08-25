@@ -1,5 +1,6 @@
 import RevisitArrays.Fundamentals.ArraysFundamentals;
 import RevisitArrays.LogicBuilding.ArraysLogic;
+import RevisitArrays.Medium.ArraysMedium;
 
 import java.util.Arrays;
 
@@ -44,6 +45,33 @@ public class Main {
 
         System.out.println(Arrays.toString(al.unionArray(unionArr1, unionArr2)));
         System.out.println(Arrays.toString(al.intersectionArray(unionArr1, unionArr2)));
+
+//        ============================ ARRAYS MEDIUM ====================
+        ArraysMedium am = new ArraysMedium();
+
+        int[] leader = new int[]{1, 2, 5, 3, 1, 2};
+        System.out.println(am.leaders(leader));
+
+        int[] rearrangeArray = new int[]{2, 4, 5, -1, -3, -4};
+        System.out.println(Arrays.toString(am.rearrangeArray(rearrangeArray)));
+
+        int[][] spiral = new int[][]{
+                {1,2,3},
+                {4,5,6},
+                {7,8,9}
+        };
+
+        System.out.println(am.spiralOrder(spiral));
+
+        int[] twoSum = new int[]{1, 6, 2, 10, 3};
+        System.out.println(Arrays.toString(am.twoSum(twoSum, 7)));
+
+        int[] kadane = new int[]{2, 3, 5, -2, 7, -4};
+        System.out.println(am.KadaneAlgorithm(kadane));
+
+        int[] three = new int[]{0, -1, 1, 0};
+        System.out.println(am.threeSumBrute(three));
+        System.out.println(am.threeSumBetter(three));
     }
 
 }
