@@ -160,8 +160,121 @@ public class ArraysMedium {
 
     public List<List<Integer>> threeSum(int[] nums){
         List<List<Integer>> ans = new ArrayList<>();
+        Arrays.sort(nums);
+        int n = nums.length;
+
+        for(int i = 0; i < n; i++){
+            if(i > 0 && nums[i] == nums[i - 1]) continue;
+
+            int first = i + 1;
+            int last = n - 1;
+
+            while(first < last){
+                int sum = nums[i] + nums[first] + nums[last];
+                if(sum == 0){
+                    ans.add(Arrays.asList(nums[i], nums[first], nums[last]));
+
+                    while(first < last && nums[first] == nums[first + 1]) first++;
+                    while(nums[last] == nums[last - 1]) last--;
+                    first++;
+                    last--;
+                }else if(sum > 0){
+                    last--;
+                }else{
+                    first++;
+                }
+            }
+        }
 
         return ans;
     }
 
+//    Time Complexity: O(n⁴)
+//    Space Complexity: O(1)
+    public List<List<Integer>> fourSumBruteForce(int[] nums, int target){
+        Set<List<Integer>> set = new HashSet<>();
+        int n = nums.length;
+
+        for(int i = 0; i < n; i++){
+            for(int j = i + 1; j < n; j++){
+                for(int k = j + 1; k < n; k++){
+                    for(int l = k + 1; l < n; l++){
+                        if(nums[i] + nums[j] + nums[k] + nums[l] == target){
+                            List<Integer> temp = Arrays.asList(nums[i], nums[j], nums[k], nums[l]);
+
+                            Collections.sort(temp);
+                            set.add(temp);
+                        }
+                    }
+                }
+            }
+        }
+
+        return new ArrayList<>(set);
+    }
+
+//    Time Complexity: O(n³)
+//    Space Complexity: O(n²)
+    public List<List<Integer>> fourSumBetter(int[] nums, int target){
+        Set<List<Integer>> set = new HashSet<>();
+        int n = nums.length;
+
+        for(int i = 0; i < n; i++){
+            for(int j = i + 1; j < n; j++){
+                Set<Long> hashset = new HashSet<>();
+                for(int k = j + 1; k < n; k++){
+                    long sum =  (long) nums[i] + nums[j] + nums[k];
+                    long fourth = target - sum;
+
+                    if(hashset.contains(fourth)){
+                        List<Integer> temp = Arrays.asList(nums[i], nums[j], nums[k], (int)fourth);
+                        Collections.sort(temp);
+
+                        set.add(temp);
+                    }
+
+                    hashset.add((long)nums[k]);
+                }
+            }
+        }
+
+        return new ArrayList<>(set);
+    }
+
+//    Time Complexity: O(n³)
+//    Space Complexity: O(1) (excluding output)
+    public List<List<Integer>> FourSum(int[] nums, int target){
+        List<List<Integer>> ans = new ArrayList<>();
+        if (nums.length < 4) return ans;
+        Arrays.sort(nums);
+        int n = nums.length;
+
+        for(int i = 0; i < n; i++){
+            if(i > 0 && nums[i] == nums[i - 1]) continue;
+
+            for(int j = i + 1; j < n; j++){
+                if(j > i + 1 && nums[j] == nums[j - 1]) continue;
+                int first = j + 1;
+                int last = n - 1;
+
+                while(first < last){
+                    long sum = (long) nums[i] + nums[j] + nums[first] + nums[last];
+                    if(sum == target){
+                        ans.add(Arrays.asList(nums[i], nums[j], nums[first], nums[last]));
+
+                        while(first < last && nums[first] == nums[first + 1]) first++;
+                        while(first < last && nums[last] == nums[last - 1]) last--;
+                        first++;
+                        last--;
+                    }else if(sum > target){
+                        last--;
+                    }else{
+                        first++;
+                    }
+                }
+            }
+        }
+
+        return ans;
+    }
 }
