@@ -1,5 +1,7 @@
 package RevisitArrays.Medium;
 
+import Testing.ArrayPermutations;
+
 import java.util.*;
 
 public class ArraysMedium {
@@ -276,5 +278,81 @@ public class ArraysMedium {
         }
 
         return ans;
+    }
+
+    public int[] nextPermutation(int[] nums) {
+        ArrayPermutations ap = new ArrayPermutations();
+        List<List<Integer>> allPermutations = ap.permutationsBacktrack(nums);
+
+        allPermutations.sort((a,b) -> {
+            for (int i = 0; i < a.size(); i++) {
+                if (!a.get(i).equals(b.get(i))) {
+                    return a.get(i) - b.get(i);
+                }
+            }
+            return 0;
+        });
+
+        // Convert nums to list for comparison
+        List<Integer> current = new ArrayList<>();
+        for (int n : nums) current.add(n);
+
+        int index = -1;
+        for (int i = 0; i < allPermutations.size(); i++) {
+            if (allPermutations.get(i).equals(current)) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index == allPermutations.size() - 1) {
+            return allPermutations.get(0).stream().mapToInt(Integer::intValue).toArray();
+        }
+
+
+        return allPermutations.get(index + 1).stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    public void nextPermutationOptimized(int[] nums){
+        int n = nums.length;
+
+        int pivot = -1;
+
+        for(int i = n-2; i >= 0; i--){
+            if(nums[i] < nums[i + 1]){
+                pivot = i;
+                break;
+            }
+        }
+
+        if(pivot == -1) {
+            reverse(nums, 0, n-1);
+            System.out.println(Arrays.toString(nums));
+            return;
+        }
+
+        for(int i = n-1; i >= 0; i--){
+            if(nums[i] > nums[pivot]){
+                swap(nums, i, pivot);
+                break;
+            }
+        }
+
+        reverse(nums, pivot + 1, n-1);
+        System.out.println(Arrays.toString(nums));
+    }
+
+    public void reverse(int[] nums, int start, int end){
+        while(start < end){
+            swap(nums, start, end);
+            start++;
+            end--;
+        }
+    }
+
+    public void swap(int[] nums, int i, int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 }

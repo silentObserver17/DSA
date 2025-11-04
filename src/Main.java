@@ -1,6 +1,7 @@
 import RevisitArrays.Fundamentals.ArraysFundamentals;
 import RevisitArrays.LogicBuilding.ArraysLogic;
 import RevisitArrays.Medium.ArraysMedium;
+import Testing.ArrayPermutations;
 
 import java.util.Arrays;
 
@@ -78,6 +79,17 @@ public class Main {
         System.out.println(am.fourSumBruteForce(four, 0));
         System.out.println(am.fourSumBetter(four, 0));
         System.out.println(am.FourSum(four, 0));
+
+        int[] nextPermutationArr = new int[]{1,2,3};
+        // System.out.println(Arrays.toString(am.nextPermutation(nextPermutationArr)));
+        am.nextPermutationOptimized(nextPermutationArr);
+
+        // ================== ARRAY PERMUTATIONS ========================
+//        ArrayPermutations ap = new ArrayPermutations();
+//        int[] permutationA = new int[]{1,2,3};
+//        System.out.println(ap.permutationsBacktrack(permutationA));
+//
+//        System.out.println(ap.permutationsSwapping(permutationA));
     }
 
 }
