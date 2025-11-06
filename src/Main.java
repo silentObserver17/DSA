@@ -1,4 +1,5 @@
 import RevisitArrays.Fundamentals.ArraysFundamentals;
+import RevisitArrays.Hard.ArraysHard;
 import RevisitArrays.LogicBuilding.ArraysLogic;
 import RevisitArrays.Medium.ArraysMedium;
 import Testing.ArrayPermutations;
@@ -84,12 +85,30 @@ public class Main {
         // System.out.println(Arrays.toString(am.nextPermutation(nextPermutationArr)));
         am.nextPermutationOptimized(nextPermutationArr);
 
+        int[] majority = new int[]{2, 2, 1, 1, 1, 2, 2};
+        System.out.println(am.majorityElement(majority));
+        System.out.println(am.majorityElementOptimized(majority));
+
+        int[][] rotate = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
+        am.rotateMatrix(rotate);
+        am.rotateMatrixInPlace(rotate);
         // ================== ARRAY PERMUTATIONS ========================
 //        ArrayPermutations ap = new ArrayPermutations();
 //        int[] permutationA = new int[]{1,2,3};
 //        System.out.println(ap.permutationsBacktrack(permutationA));
 //
 //        System.out.println(ap.permutationsSwapping(permutationA));
+
+
+        // ====================== ARRAY HARD ===============================
+        ArraysHard ah = new ArraysHard();
+        int[] majority2 = new int[]{1, 2, 1, 1, 3, 2, 2};
+        System.out.println(ah.majorityElementTwo(majority2));
+        System.out.println(ah.majorityElementTwoOptimization(majority2));
+
+        int[] duplicateMissing = new int[]{1, 2, 3, 6, 7, 5, 7};
+        System.out.println(Arrays.toString(ah.findMissingRepeatingNumbers(duplicateMissing)));
+        System.out.println(Arrays.toString(ah.findMissingRepeatingNumbersOptimized(duplicateMissing)));
     }
 
 }

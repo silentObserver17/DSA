@@ -355,4 +355,97 @@ public class ArraysMedium {
         nums[i] = nums[j];
         nums[j] = temp;
     }
+    
+    public int majorityElement(int[] nums){
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int n = nums.length;
+
+        for(int num: nums){
+            map.put(num, map.getOrDefault(num, 0) + 1);
+            if(map.get(num) > n/2){
+                return num;
+            }
+        }
+
+        return -1;
+    }
+
+    public int majorityElementOptimized(int[] nums){
+        int count = 0;
+        int candidate = -1;
+        int n = nums.length;
+
+        for(int num: nums){
+            if(count == 0){
+                candidate = num;
+                count = 1;
+            }else if(num == candidate){
+                count++;
+            }else{
+                count--;
+            }
+        }
+
+        count = 0;
+        for(int num: nums){
+            if(num == candidate){
+                count++;
+            }
+        }
+
+        if(count > n/2){
+            return candidate;
+        }
+
+        return -1;
+    }
+
+    public void rotateMatrix(int[][] matrix){
+        int n = matrix.length;
+        int[][] rotatedMatrix = new int[n][n];
+
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                rotatedMatrix[j][n - 1 - i] = matrix[i][j];
+            }
+        }
+
+        System.out.println(Arrays.deepToString(rotatedMatrix));
+    }
+
+    public void transposeMatrix(int[][] matrix){
+        int n = matrix.length;
+
+        for(int i = 0; i < n; i++){
+            for(int j = i + 1; j < n; j++){
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+    }
+
+    public void reverseRows(int[][] matrix){
+        int n = matrix.length;
+
+        for(int i = 0; i < n; i++){
+            int left = 0, right = n -1;
+            while(left < right){
+                int temp = matrix[i][left];
+                matrix[i][left] = matrix[i][right];
+                matrix[i][right] = temp;
+                left++;
+                right--;
+            }
+        }
+    }
+
+    public void rotateMatrixInPlace(int[][] matrix){
+        transposeMatrix(matrix);
+        reverseRows(matrix);
+        System.out.println(Arrays.deepToString(matrix));
+    }
+
+
+
 }
