@@ -446,6 +446,4 @@ public class ArraysMedium {
         System.out.println(Arrays.deepToString(matrix));
     }
 
-
-
 }

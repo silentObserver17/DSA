@@ -1,7 +1,13 @@
+import BinarySearch.Answers;
+import BinarySearch.LBBinarySearch;
+import BinarySearch.TwoDBinarySearch;
+import Hashing.FAQ.FaqHashing;
+import Recursion.BasicRecursion;
 import RevisitArrays.Fundamentals.ArraysFundamentals;
 import RevisitArrays.Hard.ArraysHard;
 import RevisitArrays.LogicBuilding.ArraysLogic;
 import RevisitArrays.Medium.ArraysMedium;
+import Sorting.MergeSort;
 import Testing.ArrayPermutations;
 
 import java.util.Arrays;
@@ -109,6 +115,109 @@ public class Main {
         int[] duplicateMissing = new int[]{1, 2, 3, 6, 7, 5, 7};
         System.out.println(Arrays.toString(ah.findMissingRepeatingNumbers(duplicateMissing)));
         System.out.println(Arrays.toString(ah.findMissingRepeatingNumbersOptimized(duplicateMissing)));
+
+        int[] invenrsions = new int[]{5,4,3,2,1};
+        System.out.println(ah.countInversionsBrute(invenrsions));
+        System.out.println(ah.countInversionsOptimal(invenrsions));
+
+        int[] maxProduct = new int[]{2, 3, -2, 4, -1};
+        System.out.println(ah.maxProduct(maxProduct));
+
+        int[] reversePairs = new int[]{6, 4, 1, 2, 7};
+        System.out.println(ah.ReversePairs(reversePairs));
+
+        int[] nums1 = {-5, -2, 4, 5, 0, 0, 0};
+        int[] nums2 = {-3, 1, 8};
+
+        ah.MergeWithoutExtraSpace1(nums1, nums2, 4, 3);
+
+        // ================== SORTING ========================
+//        MergeSort ms = new MergeSort();
+//        int[] mergeSortArr = new int[]{5,4,3,2,1};
+//        ms.MergeSort(mergeSortArr, 0, mergeSortArr.length - 1);
+
+        // ===================== HASHING ========================
+        System.out.println("==================== HASHING =====================");
+        FaqHashing fh = new  FaqHashing();
+        int[] longestConsec = new int[]{0,3,7,2,5,8,4,6,0,1};
+//        System.out.println(fh.longestConsecutiveBruteForce(longestConsec));
+//        System.out.println(fh.longestConsecutiveBetter(longestConsec));
+        System.out.println(fh.longestConsecutiveOptimal(longestConsec));
+
+        String[] groupAnagrams = new String[]{"eat", "tea", "tan", "ate", "nat", "bat"};
+        System.out.println(fh.GroupAnagramsBruteForce(groupAnagrams));
+        System.out.println(fh.GroupAnagramsBetter(groupAnagrams));
+        System.out.println(fh.GroupAnagrams(groupAnagrams));
+
+        System.out.println(fh.lengthOfLongestSubstringBruteForce("abba"));
+        System.out.println(fh.lengthOfLongestSubstringOptimal("abba"));
+
+        int[] subarrSum = new int[]{1,1,1};
+        System.out.println(fh.subarraySumBruteForce(subarrSum, 2));
+        System.out.println(fh.subarraySumOptimal(subarrSum, 2));
+
+        System.out.println(fh.MaximumWindowSubstring("ADOBECODEBANC", "ABC"));
+        System.out.println(fh.MaximumWindowSubstringOptimal("ADOBECODEBANC", "ABC"));
+        System.out.println(fh.MaximumWindowSubstringOptimal2("aaab", "aab"));
+
+
+        // ================== BINARY SEARCH =========================
+        System.out.println("================ BINARY SEARCH ===================");
+        LBBinarySearch lbb = new LBBinarySearch();
+        int[] firstlast = new int[]{5,7,7,8,8,10};
+        System.out.println(Arrays.toString(lbb.firstLastOccurrence(firstlast, 8)));
+
+        int[] minSortedRotated = new int[]{4,5,6,7,0,1,2};
+        System.out.println(lbb.minimumInRotatedArray(minSortedRotated));
+
+        int[] minSortedDuplicates = new int[]{2, 0, 1, 2, 2, 2, 2};
+        System.out.println(lbb.minimumInRotatedArrayDuplicates(minSortedDuplicates));
+
+        System.out.println(lbb.searchInRotatedArray(minSortedRotated, 1));
+        System.out.println(lbb.searchInRotatedArrayDuplicates(new int[]{3,1}, 1));
+
+        int[] timesArrayRotated = new int[]{4,5,6,7,0,1,2,3};
+        System.out.println(lbb.NoOfTimesArrayRotated(timesArrayRotated));
+
+        System.out.println("---------------------- BS ON ANSWERS ----------------");
+        Answers ans = new Answers();
+        System.out.println(ans.nthRoot(3,27));
+
+        int[] koko = new int[]{3,6,7,11};
+        System.out.println(ans.KokoEatingBananas(koko, 8));
+
+        int[]aggressiveCows = new int[]{1,2,4,8,9};
+        System.out.println(ans.AggressiveCows(aggressiveCows, 3));
+
+        int[] bookAllocation = new int[]{10, 20, 30, 40};
+        System.out.println(ans.BookAllocation(bookAllocation, 2));
+
+        int[] bloomDay = new int[]{1, 10, 3, 10, 2};
+        System.out.println(ans.MakeBouquets(bloomDay, 3, 2));
+
+        int[] gasStations = new int[]{1, 13, 17, 23};
+        System.out.println(ans.gasStationsOptimal(gasStations, 5));
+
+        System.out.println("================= 2D BINARY SEARCH ================");
+        TwoDBinarySearch tdb = new TwoDBinarySearch();
+
+        int[][] searchBinaryMatrix = new int[][]{{1,2,3,4},{5,6,7,8},{9,10,11,12}};
+        System.out.println(tdb.searchMatrix(searchBinaryMatrix, 12));
+
+        int[][] searchMatrix2 = new int[][]{{1,  4,  7, 11, 15}, {2,  5,  8, 12, 19}, {3,  6,  9, 16, 22},{10,13,14,17,24},{18,21,23,26,30}};
+        System.out.println(tdb.searchMatrix2(searchMatrix2, 12));
+
+        int[][] median2d = new int[][]{{1, 3, 5}, {2,6,9}, {3,6,9}};
+        System.out.println(tdb.median2DBruteForce(median2d));
+        System.out.println(tdb.median2dForBothEvenOdd(median2d));
+
+        System.out.println("================= RECURSION ================");
+        BasicRecursion br = new  BasicRecursion();
+        System.out.println(br.PowerN(5,4));
+        System.out.println(br.PowerNOptimal(3,5));
+
+        System.out.println(br.SumOfDigitsBruteForce(1234));
+        System.out.println(br.SumOfDigitsRecursion(-123));
     }
 
 }
