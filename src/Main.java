@@ -1,8 +1,13 @@
 import BinarySearch.Answers;
 import BinarySearch.LBBinarySearch;
 import BinarySearch.TwoDBinarySearch;
+import Greedy.HardGreedy;
+import Greedy.MediumGreedy;
 import Hashing.FAQ.FaqHashing;
+import LinkedList.BasicLL;
 import Recursion.BasicRecursion;
+import Recursion.HardRecursion;
+import Recursion.MediumRecursion;
 import RevisitArrays.Fundamentals.ArraysFundamentals;
 import RevisitArrays.Hard.ArraysHard;
 import RevisitArrays.LogicBuilding.ArraysLogic;
@@ -218,6 +223,98 @@ public class Main {
 
         System.out.println(br.SumOfDigitsBruteForce(1234));
         System.out.println(br.SumOfDigitsRecursion(-123));
+
+        System.out.println(br.ReverseString("hello"));
+        System.out.println(br.ReverseStringSecond("hello"));
+
+        System.out.println(br.generateParenthesis(3));
+
+        System.out.println(br.powerSet(new int[]{1,2,3}));
+
+        System.out.println(br.subsequenceSumK(new int[]{1,2,3,4,5}, 8));
+
+        System.out.println(br.subsequenceSumKCount(new int[]{1,2,3,4,5}, 8));
+
+        MediumRecursion mr = new  MediumRecursion();
+        System.out.println(mr.CombinationSum(new int[]{2,3,5}, 8));
+
+        System.out.println(mr.CombinationSum2(new int[]{2, 1, 2, 7, 6, 1, 5}, 8));
+
+        System.out.println(mr.Subset1BruteForce(new int[]{2,3}));
+        System.out.println(mr.Subset1(new int[]{2,3}));
+        System.out.println(mr.Subset2(new int[]{1, 2, 2}));
+
+        System.out.println(mr.combinationSum3(3, 8));
+
+        System.out.println(mr.permutation1(new int[]{1,2,3}));
+
+        System.out.println(mr.permutation2(new int[]{1,1,2}));
+
+        HardRecursion hr = new  HardRecursion();
+        System.out.println(hr.letterCombinations("7"));
+
+        System.out.println(hr.palindromePartitioning("aab"));
+
+        System.out.println(hr.nQueensIntuitive(4));
+        System.out.println(hr.solveNQueens(4));
+
+        int[][] ratMaze = new int[][]{{1, 0, 0, 0}, {1, 1, 0, 1}, {1, 1, 0, 0}, {0, 1, 1, 1}};
+        System.out.println(hr.RatInMaze(ratMaze));
+
+        char[][] sudokuBoard = {
+                {'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+                {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+                {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+                {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+                {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+                {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+                {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+                {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+                {'.', '.', '.', '.', '8', '.', '.', '7', '9'}
+        };
+
+        hr.solveSudokuOptimal(sudokuBoard);
+//        hr.solveSudoku(sudokuBoard);
+
+        System.out.println("================ LINKED LIST ========================");
+        BasicLL bll = new  BasicLL();
+        bll.ArrayToLinkedList(new int[]{1,2,3,4,5});
+
+        System.out.println("================ GREEDY ALGORITHMS ========================");
+        MediumGreedy mg = new MediumGreedy();
+        System.out.println(mg.shortestJobV1(new int[]{1, 2, 3, 4}));
+
+        int[][] jobsGreedy = new int[][]{{1, 4, 20}, {2, 1, 10}, {3, 1, 40}, {4, 1, 30}};
+        System.out.println(Arrays.toString(mg.JobSequencing(jobsGreedy)));
+
+        int[] meetingStart = new int[]{10,12,20};
+        int[] meetingEnd = new int[]{20,25,30};
+        System.out.println(mg.maxMeetings(meetingStart, meetingEnd));
+
+        int[][] nonOverlap = new int[][]{{1,3},{1,4},{3,5},{3,4},{4,5}};
+        System.out.println(mg.MaximumNonOverlappingIntervals(nonOverlap));
+
+        int[][] Interval = new int[][]{{1,3},{6,9}};
+        int[] newInterval = new int[]{2,5};
+        System.out.println(Arrays.deepToString(mg.insertNewInterval(Interval, newInterval)));
+
+        int[] arrival = new int[]{900, 940, 950, 1100, 1500, 1800};
+        int[] departure = new int[]{910, 1200, 1120, 1130, 1900, 2000};
+        System.out.println(mg.findPlatformBrute(arrival, departure));
+        System.out.println(mg.findPlatform(arrival, departure));
+
+        HardGreedy hg = new  HardGreedy();
+        System.out.println(hg.isValidBrute("(*("));
+        System.out.println(hg.isValid("((*))"));
+        System.out.println(hg.isValidTwoPasses("((*))"));
+
+        System.out.println(mg.canJump2(new int[]{2,3,0,1,4}));
+
+        int[] gas = new int[]{1,2,3,4,5};
+        int[] cost = new int[]{3,4,5,1,2};
+        System.out.println(hg.canCompleteCycle(gas, cost));
+
+        System.out.println(mg.largestNumber(new int[]{10,2}));
     }
 
 }
