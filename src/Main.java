@@ -12,10 +12,19 @@ import RevisitArrays.Fundamentals.ArraysFundamentals;
 import RevisitArrays.Hard.ArraysHard;
 import RevisitArrays.LogicBuilding.ArraysLogic;
 import RevisitArrays.Medium.ArraysMedium;
+import SlindingWindowPointers.ConstantWindow;
+import SlindingWindowPointers.CountingSubarrays;
+import SlindingWindowPointers.LongestSmallestWindow;
 import Sorting.MergeSort;
+import StackQueues.MonotonicStack;
+import StackQueues.QueueImplementation;
+import StackQueues.StackFAQ;
+import StackQueues.StackImplementation;
 import Testing.ArrayPermutations;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Queue;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -315,6 +324,103 @@ public class Main {
         System.out.println(hg.canCompleteCycle(gas, cost));
 
         System.out.println(mg.largestNumber(new int[]{10,2}));
+
+        System.out.println("======================= SLIDING WINDOW/TWO POINTERS ===================");
+        ConstantWindow cw = new  ConstantWindow();
+        System.out.println(cw.maxScoreBruteForce(new int[]{1, 2, 3, 4, 5, 6}, 3));
+        System.out.println(cw.maxScore(new int[]{1, 2, 3, 4, 5, 6}, 3));
+        System.out.println(cw.maxScoreOptimal1(new int[]{1, 2, 3, 4, 5, 6}, 3));
+        System.out.println(cw.maxScoreSlidingWindow(new int[]{1, 2, 3, 4, 5, 6}, 3));
+
+        LongestSmallestWindow lsw = new LongestSmallestWindow();
+        System.out.println(lsw.longestNonRepeatingSubstringBrute("dvdf"));
+        System.out.println(lsw.longestRepeatingSubstring("dvdf"));
+
+        System.out.println(lsw.longestOnesBrute(new int[]{0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1}, 3));
+        System.out.println(lsw.longestOnes(new int[]{0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1}, 3));
+
+        System.out.println(lsw.totalFruits(new int[]{1,2,3,2,2}));
+
+        System.out.println(lsw.kDistinctCharBrute("aababbcaacc", 2));
+        System.out.println(lsw.kDistinctChar("aababbcaacc", 2));
+
+        System.out.println(lsw.characterReplacement("ABAB", 2));
+        System.out.println(lsw.characterReplacementSubstring("AABABBA", 1));
+
+        System.out.println(lsw.minWindow("ADOBECODEBANC", "ABC"));
+
+        CountingSubarrays cs = new  CountingSubarrays();
+        System.out.println(cs.numberOfSubstringsBrute("aabc"));
+        System.out.println(cs.numberOfSubstring("aabc"));
+        System.out.println(cs.numberOfSubstringOptimal("aabc"));
+
+        System.out.println(cs.numSubarraysWithSumBrute(new int[]{1,1,0,1,0,0,1}, 3));
+        System.out.println(cs.numSubarraysWithSum(new int[]{1,1,0,1,0,0,1}, 3));
+        System.out.println(cs.numSubArraysWithSumSliding(new int[]{0, 0, 0, 0, 1}, 0));
+
+        System.out.println(cs.numberOfSubarraysBrute(new int[]{1,1,2,1,1}, 3));
+        System.out.println(cs.numberOfSubarrays(new int[]{1,1,2,1,1}, 3));
+        System.out.println(cs.numberOfSubarraysSliding(new int[]{1,1,2,1,1}, 3));
+
+        System.out.println(cs.maxAreaBrute(new int[]{1,8,6,2,5,4,8,3,7}));
+        System.out.println(cs.maxArea(new int[]{1,8,6,2,5,4,8,3,7}));
+
+        System.out.println("==================== STACK & QUEUES ==================");
+        QueueImplementation q = new  QueueImplementation();
+        StackImplementation s = new StackImplementation();
+        q.QueueUsingArray();
+        s.StackUsingQueues();
+
+        q.QueueUsingStack();
+
+        MonotonicStack ms = new  MonotonicStack();
+        System.out.println(ms.isValidParenthesis("{[()]}"));
+
+        System.out.println(Arrays.toString(ms.nextLargerElementBrute(new int[]{4, 5, 2, 25})));
+        System.out.println(Arrays.toString(ms.nextLargerElement(new int[]{1,2,3,4})));
+
+        System.out.println(Arrays.toString(ms.nextSmallerElement(new int[]{4, 8, 5, 2, 25})));
+
+        System.out.println(Arrays.toString(ms.nextGreaterElements(new int[]{1,2,3,4,3})));
+
+        System.out.println(ms.subArrayRanges(new int[]{1,2,3}));
+        System.out.println(ms.removeKdigits("10200", 1));
+
+        StackFAQ sfaq =  new  StackFAQ();
+        System.out.println(sfaq.maxSlidingWindowBrute(new int[]{4, 0, -1, 3, 5, 3, 6, 8}, 3));
+        System.out.println(Arrays.toString(sfaq.maxSlidingWindow(new int[]{4, 0, -1, 3, 5, 3, 6, 8}, 3)));
+
+        System.out.println(sfaq.trappingRainWaterBrute(new int[]{0,1,0,2,1,0,1,3,2,1,2,1}));
+        System.out.println(sfaq.trappingRainWaterBetter(new int[]{0,1,0,2,1,0,1,3,2,1,2,1}));
+        System.out.println(sfaq.trappingRainWater(new int[]{0,1,0,2,1,0,1,3,2,1,2,1}));
+        System.out.println(sfaq.trappingRainWaterStack(new int[]{0,1,0,2,1,0,1,3,2,1,2,1}));
+
+        System.out.println(sfaq.largestRectangleAreaBetter(new int[]{2, 1, 5, 6, 2, 3}));
+        System.out.println(sfaq.largestRectangleAreaOptimal(new int[]{2, 1, 5, 6, 2, 3}));
+
+        System.out.println(sfaq.maximalRectangle(new int[][]{{1,0,1,0,0},
+                {1,0,1,1,1},
+                {1,1,1,1,1},
+                {1,0,0,1,0}}));
+
+        System.out.println(Arrays.toString(sfaq.stockSpan(new int[]{120, 100, 60, 80, 90, 110, 115}, 7)));
+        System.out.println(Arrays.toString(sfaq.stockSpanOptimal(new int[]{15, 13, 12, 14, 16, 20}, 6)));
+
+        System.out.println(sfaq.celebrityBrute(new int[][]{
+                {0, 1, 1, 0},
+                {0, 0, 0, 0},
+                {1, 1, 0, 0},
+                {0, 1, 1, 0},
+        }));
+
+        System.out.println(sfaq.celebrity(new int[][]{
+                {0, 1, 1, 0},
+                {0, 0, 0, 0},
+                {1, 1, 0, 0},
+                {0, 1, 1, 0},
+        }));
+
+        System.out.println(Arrays.toString(sfaq.dailyTemperaturesBrute(new int[]{30,40,50,60})));
     }
 
 }
