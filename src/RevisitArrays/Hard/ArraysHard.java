@@ -220,6 +220,27 @@ public class ArraysHard {
         return maxSoFar;
     }
 
+    public int maxProductSimple(int[] nums) {
+        if(nums.length == 0 ) return 0;
+
+        int maxSoFar = nums[0];
+        int minSoFar = nums[0];
+        int result = nums[0];
+
+        for(int i = 1; i < nums.length; i++){
+            int current = nums[i];
+
+            int tempMax = Math.max(current, Math.max(current * maxSoFar, current * minSoFar));
+            minSoFar = Math.min(current, Math.min(current * maxSoFar, current * minSoFar));
+
+            maxSoFar = tempMax;
+
+            result = Math.max(result, tempMax);
+        }
+
+        return result;
+    }
+
     public int ReversePairs(int[] nums){
         return mergeSortForReversePairs(nums, 0, nums.length - 1);
     }
@@ -306,6 +327,95 @@ public class ArraysHard {
         System.out.println(Arrays.toString(nums1));
     }
 
+    public void MergeWithoutExtraSpace2(int[] nums1, int[] nums2, int m, int n){
+        int left = m - 1;
+        int right = n - 1;
+        int idx = m + n - 1;
+
+        while(right >= 0){
+            if(left >= 0 && nums1[left] >  nums2[right]){
+                nums1[idx] = nums1[left];
+                left--;
+            }else{
+                nums1[idx] = nums2[right];
+                right--;
+            }
+            idx--;
+        }
+    }
+
+    public int NumberOfJumpsBrute(int[] nums, int k) {
+        int count = 0;
+
+        for(int i = 0; i < nums.length; i++){
+            for(int j = i + 1; j < nums.length; j++){
+                if(nums[i] + k < nums[j]){
+                    count++;
+                }
+            }
+        }
+
+        return count;
+    }
+
+    public int NumberOfJumps(int[] nums, int k) {
+        int n = nums.length;
+        int count = 0;
+
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+
+        for(int i = n - 1; i >= 0; i--){
+            int threshold = nums[i] + k;
+
+            for(int freq: map.tailMap(threshold, false).values()){
+                count += freq;
+            }
+
+            map.merge(nums[i], 1, Integer::sum);
+        }
+
+        return count;
+    }
+
+    public int[] setDifference(int[] nums1, int [] nums2){
+        if(nums1 == null || nums2 == null) return new int[]{};
+        int left = 0;
+        int right = 0;
+
+        List<Integer> list = new ArrayList<>();
+
+        while(left < nums1.length && right < nums2.length){
+            if(nums1[left] == nums2[right]){
+                int val = nums1[left];
+                while(left < nums1.length && nums1[left] == val)left++;
+                while(right < nums2.length && nums2[right] == val)right++;
+            }
+            else if(nums1[left] < nums2[right]){
+                int val = nums1[left];
+                list.add(val);
+                while(left < nums1.length && nums1[left] == val) left++;
+            }
+            else if(nums1[left] > nums2[right]){
+                int val = nums2[right];
+                list.add(val);
+                while(right < nums2.length && nums2[right] == val) right++;
+            }
+        }
+
+        while(left < nums1.length) {
+            int val =  nums1[left];
+            list.add(val);
+            while (left < nums1.length && nums1[left] == val) left++;
+        }
+
+        while(right < nums2.length) {
+            int val =  nums2[right];
+            list.add(val);
+            while (right < nums2.length && nums2[right] == val) right++;
+        }
+
+        return list.stream().mapToInt(Integer::intValue).toArray();
+    }
 }
 
 

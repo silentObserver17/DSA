@@ -74,7 +74,7 @@ public class BasicRecursion {
         }
 
         if(close < n && close < open){
-            generateParenthesisHelper(current + ")", open, close + 1, n, result);
+            generateParenthesisHelper(current + ")", open, close + 1 , n, result);
         }
     }
 

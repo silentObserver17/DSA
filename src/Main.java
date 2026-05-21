@@ -1,3 +1,7 @@
+import Basics.BasicArrays;
+import Basics.BasicHashMap;
+import Basics.BasicMaths;
+import Basics.BasicStrings;
 import BinarySearch.Answers;
 import BinarySearch.LBBinarySearch;
 import BinarySearch.TwoDBinarySearch;
@@ -23,6 +27,8 @@ import StackQueues.StackImplementation;
 import Testing.ArrayPermutations;
 
 import java.lang.reflect.Array;
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Queue;
 
@@ -48,9 +54,9 @@ public class Main {
         int[] rotateOne = new int[]{1, 2, 3, 4, 5};
         af.rotateArrayByOne(rotateOne);
 
-        int[] leftRotate = new int[]{3, 4, 1, 5, 3, -5};
-        af.rotateArray(leftRotate, 8);
-
+        int[] leftRotate = new int[]{1,2,3,4,5,6};
+//        af.rotateArray(leftRotate, 8);
+        af.rotateArrayOptimal(leftRotate, 2);
 //        ============================ ARRAYS LOGIC BUILDING ====================
         ArraysLogic al = new ArraysLogic();
         int[] moveZeros = new int[]{0, 20, 0, -20, 0, 20};
@@ -112,12 +118,14 @@ public class Main {
         int[][] rotate = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
         am.rotateMatrix(rotate);
         am.rotateMatrixInPlace(rotate);
+
+        am.sortZeroOnesTwoDutch(new int[]{1, 0, 2, 1, 0});
         // ================== ARRAY PERMUTATIONS ========================
-//        ArrayPermutations ap = new ArrayPermutations();
-//        int[] permutationA = new int[]{1,2,3};
-//        System.out.println(ap.permutationsBacktrack(permutationA));
-//
-//        System.out.println(ap.permutationsSwapping(permutationA));
+        ArrayPermutations ap = new ArrayPermutations();
+        int[] permutationA = new int[]{1,2,3};
+        System.out.println(ap.permutationsBacktrack(permutationA));
+
+        System.out.println(ap.permutationsSwapping(permutationA));
 
 
         // ====================== ARRAY HARD ===============================
@@ -134,8 +142,9 @@ public class Main {
         System.out.println(ah.countInversionsBrute(invenrsions));
         System.out.println(ah.countInversionsOptimal(invenrsions));
 
-        int[] maxProduct = new int[]{2, 3, -2, 4, -1};
+        int[] maxProduct = new int[]{1, -2, 3, 4, -4, -3};
         System.out.println(ah.maxProduct(maxProduct));
+        System.out.println(ah.maxProductSimple(new int[]{1, -2, 3, 4, -4, -3}));
 
         int[] reversePairs = new int[]{6, 4, 1, 2, 7};
         System.out.println(ah.ReversePairs(reversePairs));
@@ -143,7 +152,13 @@ public class Main {
         int[] nums1 = {-5, -2, 4, 5, 0, 0, 0};
         int[] nums2 = {-3, 1, 8};
 
-        ah.MergeWithoutExtraSpace1(nums1, nums2, 4, 3);
+        // ah.MergeWithoutExtraSpace1(nums1, nums2, 4, 3);
+        ah.MergeWithoutExtraSpace2(nums1, nums2, 4,3);
+
+        System.out.println("Brute: " + ah.NumberOfJumpsBrute(new int[]{1, 4, 5, 1, 7}, 3));
+        System.out.println("Optimal: " + ah.NumberOfJumps(new int[]{3, 1, 10, 6, 5}, 2));
+
+        System.out.println(Arrays.toString(ah.setDifference(new int[]{1, 2, 6, 6}, new int[]{-2, 2, 3, 4, 6})));
 
         // ================== SORTING ========================
 //        MergeSort ms = new MergeSort();
@@ -421,6 +436,85 @@ public class Main {
         }));
 
         System.out.println(Arrays.toString(sfaq.dailyTemperaturesBrute(new int[]{30,40,50,60})));
+
+        System.out.println("================== BASIC MATHS ===========================");
+        BasicMaths bm = new BasicMaths();
+        System.out.println(bm.countDigit(433));
+        System.out.println(bm.countDigitMaths(433));
+
+        System.out.println(bm.countOddDigit(154));
+        System.out.println(bm.reverseNumber(45));
+
+        System.out.println(bm.isPalindrome(102));
+
+        System.out.println(bm.largestDigit(901));
+
+        System.out.println(bm.factorial(5));
+
+        System.out.println(bm.isArmstrong(12));
+
+        System.out.println(bm.isPerfect(4));
+
+        System.out.println(bm.isPrime(3));
+
+        System.out.println(bm.primeUptoNBrute(6));
+
+        System.out.println(bm.GCD(6,12));
+        System.out.println(bm.GCDRecursion(6,12));
+
+        System.out.println(Arrays.toString(bm.divisors2(8)));
+
+        System.out.println("================== BASIC MATHS ===========================");
+        BasicArrays ba = new  BasicArrays();
+        System.out.println(ba.sum(new int[]{1,2,1,1,5,1}, 6));
+
+        ba.reverse(new int[]{1,2,3,4,5}, 5);
+
+        System.out.println("================== BASIC HASHMAPS ===========================");
+        BasicHashMap bh = new  BasicHashMap();
+        System.out.println(bh.mostFrequentElementBrute(new int[]{2, 4, 3, 2, 5, 4}));
+        System.out.println(bh.mostFrequentElement(new int[]{2, 4, 3, 2, 5, 4}));
+
+        System.out.println(bh.secondMostFrequentElement(new int[]{4, 4, 5, 5, 6, 7}));
+        System.out.println(bh.secondMostFrequentElement2(new int[]{4, 4, 5, 5, 6, 7}));
+
+        System.out.println(bh.sumHighestAndLowestFrequency(new int[]{4, 4, 5, 5, 6}));
+        System.out.println(bh.sumHighestAndLowestFrequency2(new int[]{4, 4, 5, 5, 6}));
+
+        System.out.println("================== BASIC STRINGS ========================");
+        BasicStrings sb = new  BasicStrings();
+        sb.reverseString(new ArrayList<>(Arrays.asList('h', 'e',  'l', 'l', 'o')));
+
+        System.out.println(sb.palindromeCheck("hannah"));
+        System.out.println(sb.largeOddNum("0214638"));
+
+        System.out.println(sb.longestCommonPrefix(new String[]{"dog" , "cat" , "animal", "monkey"}));
+
+        System.out.println(sb.isomorphicString("add", "egg"));
+        System.out.println(sb.isomorphicStringArray("add", "egg"));
+
+        System.out.println(sb.rotateString("abcde", "cdeab"));
+        System.out.println(sb.rotateStringOptimal("abcde", "cdeab"));
+
+        System.out.println(sb.anagramStringsBrute("anagram", "nagaram"));
+
+        System.out.println("================== BASIC RECURSION ========================");
+        Basics.BasicRecursion brr = new Basics.BasicRecursion();
+        System.out.println(brr.arraySum(new int[]{1,2,3}));
+
+        System.out.println(brr.reverseString(new ArrayList<>(Arrays.asList('h', 'e',  'l', 'l', 'o'))));
+
+        System.out.println(brr.palindromeCheck("hannah"));
+
+        System.out.println(brr.checkPrime(32));
+
+        System.out.println(Arrays.toString(brr.reverseArray(new int[]{1, 2, 3, 4, 5})));
+
+        System.out.println(brr.isSorted(new ArrayList<>(Arrays.asList(1,1))));
+
+        System.out.println(brr.addDigits(529));
+
+        System.out.println(brr.fibonacci(3));
     }
 
 }
