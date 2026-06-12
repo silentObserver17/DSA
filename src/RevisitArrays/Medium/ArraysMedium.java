@@ -475,4 +475,36 @@ public class ArraysMedium {
         System.out.println(Arrays.toString(nums));
     }
 
+    public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        int n = nums.length;
+
+        int distance = (int)1e9;
+        int answer = (int)1e9;
+
+        for(int i = 0; i < n; i++) {
+            int first = i + 1;
+            int last = n - 1;
+
+            while(first < last) {
+                int sum = nums[i] + nums[first] + nums[last];
+                int diff = Math.abs(target - sum);
+
+                if(diff == 0) return sum;
+                else if(diff < distance){
+                    answer = sum;
+                    distance = diff;
+                }
+
+                if(sum > target) {
+                    last--;
+                }else {
+                    first++;
+                }
+            }
+        }
+
+        return answer;
+    }
+
 }
