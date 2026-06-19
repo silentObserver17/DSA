@@ -162,6 +162,148 @@ class Questions {
 
         return Math.min(prev1, prev2);
     }
+
+    public int HouseRobber(int[] arr) {
+        if(arr == null || arr.length == 0) return 0;
+
+        int[] dp = new int[arr.length];
+        Arrays.fill(dp, -1);
+
+        return HouseRobberHelper(arr, arr.length - 1, dp);
+    }
+
+    private int HouseRobberHelper(int[] arr, int index, int[] dp) {
+        if(index <= 0) {
+            if(index == 0) return arr[0];
+            return 0;
+        }
+
+        if(dp[index] != -1) return dp[index];
+
+        int pick = arr[index] + HouseRobberHelper(arr, index - 2, dp);
+        int notPick = HouseRobberHelper(arr, index-1, dp);
+
+        return dp[index] = Math.max(pick, notPick);
+    }
+
+    public int HouseRobberTabulation(int[] arr) {
+        if(arr == null || arr.length == 0) return 0;
+        if(arr.length == 1) return arr[0];
+        int[] dp = new int[arr.length];
+        dp[0] = arr[0];
+        dp[1] = Math.max(arr[0], arr[1]);
+
+        for(int i = 2; i < arr.length; i++) {
+            int pick = arr[i] + dp[i - 2];
+            int notPick = dp[i - 1];
+
+            dp[i] = Math.max(pick, notPick);
+        }
+
+        return dp[arr.length - 1];
+    }
+
+    public int HouseRobberSpaceOptimization(int[] arr) {
+        if(arr == null || arr.length == 0) return 0;
+        if(arr.length == 1) return arr[0];
+        int prev1 = Math.max(arr[0], arr[1]);
+        int prev2 = arr[0];
+
+        for(int i = 2; i < arr.length; i++) {
+            int pick = arr[i] + prev2;
+            int notPick = prev1;
+
+            int curr = Math.max(pick, notPick);
+            prev2 = prev1;
+            prev1 = curr;
+        }
+
+        return prev1;
+    }
+
+    public int HouseRobbery2(int[] nums) {
+        if(nums == null || nums.length == 0) return 0;
+        if(nums.length == 1) return nums[0];
+
+        int[] firstDp = new int[nums.length];
+        Arrays.fill(firstDp, -1);
+
+        int[] secondDp = new int[nums.length];
+        Arrays.fill(secondDp, -1);
+
+        int firstIncluded = robberyHelper(nums, nums.length - 2, firstDp, 0);
+        int secondIncluded = robberyHelper(nums, nums.length - 1, secondDp, 1);
+
+        return Math.max(firstIncluded, secondIncluded);
+    }
+
+    private int robberyHelper(int[] arr, int index, int[] dp, int range) {
+        if(index <= range) {
+            if(index == range) return arr[index];
+            return 0;
+        }
+
+        if(dp[index] != -1) return dp[index];
+
+        int pick = arr[index] + robberyHelper(arr, index - 2, dp, range);
+        int notPick = robberyHelper(arr, index-1, dp, range);
+
+        return dp[index] = Math.max(pick, notPick);
+    }
+
+    public int HouseRobber2Tabulation(int[] nums) {
+        if(nums == null || nums.length == 0) return 0;
+        if(nums.length == 1) return nums[0];
+
+        int firstPass = HouseRobberLinear(nums, 0, nums.length - 2);
+        int secondPass = HouseRobberLinear(nums, 1, nums.length - 1);
+
+        return Math.max(firstPass, secondPass);
+    }
+
+    private int HouseRobberLinear(int[] nums, int start, int end) {
+        if(start == end) return nums[start];
+        int[] dp = new int[nums.length];
+        dp[start] = nums[start];
+        dp[start + 1] = Math.max(nums[start], nums[start + 1]);
+
+        for(int i = start + 2; i <= end; i++) {
+            int pick =  nums[i] + dp[i - 2];
+            int notPick =  dp[i - 1];
+
+            dp[i] = Math.max(pick, notPick);
+        }
+
+        return dp[end];
+    }
+
+    public int HouseRobber2SpaceOptimization(int[] nums) {
+        if(nums == null || nums.length == 0) return 0;
+        if(nums.length == 1) return nums[0];
+
+        int firstPass = HouseRobberSpaceOptimization(nums, 0, nums.length - 2);
+        int secondPass = HouseRobberSpaceOptimization(nums, 1, nums.length - 1);
+
+        return Math.max(firstPass, secondPass);
+    }
+
+
+    private int HouseRobberSpaceOptimization(int[] nums, int start, int end) {
+        if(start == end) return nums[start];
+        int prev2 = nums[start];
+        int prev1 = Math.max(nums[start], nums[start + 1]);
+
+        for(int i = start + 2; i <= end; i++) {
+            int pick =  nums[i] + prev2;
+            int notPick =  prev1;
+
+            int curr = Math.max(pick, notPick);
+            prev2 = prev1;
+            prev1 = curr;
+        }
+
+        return prev1;
+    }
 }
 
 public class OneDDP {
@@ -178,5 +320,13 @@ public class OneDDP {
         System.out.println(q.MinCostClimbing(new int[]{1, 100, 1, 1, 1, 100, 1, 1, 100, 1}));
         System.out.println(q.MinCostClimbingTabulation(new int[]{10, 15, 20}));
         System.out.println(q.MinCostClimbingSpaceOptimization(new int[]{10, 15, 20}));
+
+        System.out.println(q.HouseRobber(new int[]{2,7,9,3,1}));
+        System.out.println(q.HouseRobberTabulation(new int[]{2,7,9,3,1}));
+        System.out.println(q.HouseRobberSpaceOptimization(new int[]{2,7,9,3,1}));
+
+        System.out.println(q.HouseRobbery2(new int[]{1,2,3,1}));
+        System.out.println(q.HouseRobber2Tabulation(new int[]{2,3,2}));
+        System.out.println(q.HouseRobber2SpaceOptimization(new int[]{2,3,2}));
     }
 }
