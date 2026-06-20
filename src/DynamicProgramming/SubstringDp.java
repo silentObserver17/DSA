@@ -254,6 +254,157 @@ class SubStringQuestions {
         return dp[target];
     }
 
+    public int Knapsack(int[] val, int [] wt, int W) {
+        int n = val.length;
+
+        int[][] dp = new int[n][W + 1];
+        for(int i = 1; i < n; i++) {
+            Arrays.fill(dp[i], -1);
+        }
+
+        return knapsackHelper(n-1, W, val, wt, dp);
+    }
+
+    public int knapsackHelper(int index, int W, int[] val, int[] wt, int[][] dp) {
+        if(index == 0) {
+            if(wt[0] <= W) return val[0];
+            return 0;
+        }
+
+        if(dp[index][W] != -1) return dp[index][W];
+
+        int exclude = knapsackHelper(index-1, W, val, wt, dp);
+        int include = 0;
+        if(wt[index] <= W) {
+            include = val[index] + knapsackHelper(index-1, W - wt[index], val, wt, dp);
+        }
+
+        return dp[index][W] =  Math.max(include, exclude);
+    }
+
+    public int knapsackTabulation(int[]val, int []wt, int W) {
+        int n = val.length;
+        int[][] dp = new int[n][W + 1];
+
+        for(int i = 0; i <= W; i++) {
+            if(wt[0] <= i) dp[0][i] = val[0];
+        }
+
+        for(int i = 1; i < n; i++) {
+            for(int j = 0; j <= W; j++) {
+                int exclude = dp[i - 1][j];
+                int include = 0;
+                if(wt[i] <= j) {
+                    include = val[i] + dp[i - 1][j - wt[i]];
+                }
+
+                dp[i][j] = Math.max(include, exclude);
+            }
+        }
+
+        return dp[n-1][W];
+    }
+
+    public int knapsackSpaceOptimization(int[] val, int[]wt, int W) {
+        int n = val.length;
+        int[] dp = new int[W + 1];
+
+        for(int i = 0; i <= W; i++) {
+            if(wt[0] <= i) dp[i] = val[0];
+        }
+
+        for(int i = 1; i < n; i++) {
+            for(int j = W; j >= 1; j--) {
+                int exclude = dp[j];
+                int include = 0;
+                if(wt[i] <= j) {
+                    include = val[i] + dp[j - wt[i]];
+                }
+
+                dp[j] = Math.max(include, exclude);
+            }
+        }
+
+        return dp[W];
+    }
+
+    public int minimumSubsetSum(int[] nums) {
+        int n = nums.length;
+
+        int totalSum = Arrays.stream(nums).sum();
+
+        Boolean[][] dp = new Boolean[n][totalSum + 1];
+
+        for(int i = 0; i < n; i++) {
+            dp[i][0] = true;
+        }
+
+        if(nums[0] <= totalSum) dp[0][nums[0]] =  true;
+        for(int j = 0; j < totalSum + 1; j++) {
+            if(dp[0][j] == null) {
+                dp[0][j] = false;
+            }
+        }
+
+        for(int i = 1; i < n; i++) {
+            for(int j = 0; j < totalSum + 1; j++) {
+                boolean notPick = dp[i-1][j];
+                boolean pick = false;
+                if(nums[i] <= j) {
+                    pick = dp[i-1][j - nums[i]];
+                }
+
+                dp[i][j] = notPick || pick;
+            }
+        }
+
+        int min = Integer.MAX_VALUE;
+       for(int i = 0; i <= totalSum; i++) {
+           if(dp[n-1][i] == true) {
+               min = Math.min(Math.abs((totalSum - i) - i), min);
+           }
+       }
+
+       return min;
+    }
+
+    public int minimumSubsetSumSpaceOptimization(int[] nums) {
+        int n = nums.length;
+
+        int totalSum = Arrays.stream(nums).sum();
+
+        Boolean[] dp = new Boolean[totalSum + 1];
+
+        dp[0] = true;
+
+        if(nums[0] <= totalSum) dp[nums[0]] =  true;
+        for(int j = 0; j <= totalSum ; j++) {
+            if(dp[j] == null) {
+                dp[j] = false;
+            }
+        }
+
+        for(int i = 1; i < n; i++) {
+            for(int j = totalSum; j >= 0; j--) {
+                boolean notPick = dp[j];
+                boolean pick = false;
+                if(nums[i] <= j) {
+                    pick = dp[j - nums[i]];
+                }
+
+                dp[j] = notPick || pick;
+            }
+        }
+
+        int min = Integer.MAX_VALUE;
+        for(int i = 0; i <= totalSum; i++) {
+            if(dp[i] == true) {
+                min = Math.min(Math.abs((totalSum - i) - i), min);
+            }
+        }
+
+        return min;
+    }
 }
 
 
@@ -271,5 +422,12 @@ public class SubstringDp {
         System.out.println(sq.perfectSum(new int[]{5, 2, 3, 10, 6, 8}, 10));
         System.out.println(sq.perfectSumTabulation( new int[]{5, 2, 3, 10, 6, 8}, 10));
         System.out.println(sq.perfectSumSpaceOptimization(new int[]{5, 2, 3, 10, 6, 8}, 10));
+
+        System.out.println(sq.Knapsack(new int[]{1,2,3}, new int[]{4,5,1}, 4));
+        System.out.println(sq.knapsackTabulation( new int[]{1,2,3}, new int[]{4,5,1}, 4));
+        System.out.println(sq.knapsackSpaceOptimization(new int[]{1,2,3}, new int[]{4,5,1}, 4));
+
+        System.out.println(sq.minimumSubsetSum(new int[]{1,6,11,5}));
+        System.out.println(sq.minimumSubsetSumSpaceOptimization(new int[]{1,6,11,5}));
     }
 }
