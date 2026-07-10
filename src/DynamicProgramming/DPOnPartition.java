@@ -302,6 +302,40 @@ class DPPartitionQuestions {
         return ans;
     }
 
+    public String LongestPalindromeString(String s) {
+        int n = s.length();
+        boolean[][] isPal = new boolean[n][n];
+
+        for(int i = n - 1; i >= 0; i--) {
+            for(int j = i;  j < n; j++) {
+                if(i == j) {
+                    isPal[i][j] = true;
+                }
+                else {
+                    boolean isEqual = s.charAt(i) == s.charAt(j);
+                    if(j == i + 1) {
+                        isPal[i][j] = isEqual;
+                    }else{
+                        isPal[i][j] = isEqual && isPal[i+1][j-1];
+                    }
+                }
+            }
+        }
+
+        int start = 0;
+        int maxLen = 0;
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                if(isPal[i][j] && (j - i + 1) > maxLen) {
+                    start = i;
+                    maxLen = j - i + 1;
+                }
+            }
+        }
+
+        return s.substring(start, start + maxLen);
+    }
+
     public int PalindromePartitioning2(String s) {
         int n = s.length();
 
@@ -515,6 +549,176 @@ class DPPartitionQuestions {
         return dp[0][n-1][0];
     }
 
+    public boolean ScrambleString(String s1, String s2) {
+        int n = s1.length();
+
+        return helperScramble(0, 0, n, s1, s2);
+    }
+
+    private boolean helperScramble(int i1, int i2, int len, String s1, String s2) {
+        if(len == 1) return s1.charAt(i1) == s2.charAt(i2);
+
+        for(int p = 1; p < len; p++) {
+            boolean noSwap = helperScramble(i1, i2, p, s1, s2) && helperScramble(i1 + p, i2 + p, len - p, s1, s2);
+            if(noSwap) {
+                return true;
+            }
+
+            boolean swap = helperScramble(i1, i2 + len - p, p, s1, s2) && helperScramble(i1 + p, i2, len - p, s1, s2);
+            if(swap) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean ScrambledStringMemo(String s1, String s2) {
+        int n = s1.length();
+
+        Boolean[][][] dp = new Boolean[n][n][n + 1];
+
+        return helperScrambleMemo(0, 0,  n, s1, s2, dp);
+    }
+
+    private boolean helperScrambleMemo(int i1, int i2, int len, String s1, String s2, Boolean[][][] dp) {
+        if(len == 1) return s1.charAt(i1) == s2.charAt(i2);
+
+        if(dp[i1][i2][len] != null) return dp[i1][i2][len];
+
+        for(int p = 1; p < len; p++) {
+            boolean noSwap = helperScrambleMemo(i1, i2, p, s1, s2,dp) && helperScrambleMemo(i1 + p, i2 + p, len - p, s1, s2,dp);
+            if(noSwap) {
+                return dp[i1][i2][len] = true;
+            }
+
+            boolean swap = helperScrambleMemo(i1, i2 + len - p, p, s1, s2,dp) && helperScrambleMemo(i1 + p, i2, len - p, s1, s2,dp);
+            if(swap) {
+                return dp[i1][i2][len] = true;
+            }
+        }
+
+        return dp[i1][i2][len] = false;
+    }
+
+    public boolean ScrambledStringTabulation(String s1, String s2) {
+        int n = s1.length();
+
+        boolean[][][] dp = new boolean[n][n][n + 1];
+
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                if(s1.charAt(i) == s2.charAt(j)) {
+                    dp[i][j][1] = true;
+                }
+            }
+        }
+
+        for(int len = 2; len <= n; len++) {
+            for(int i1 = 0; i1 <= n - len; i1++) {
+                for(int i2 = 0; i2 <= n - len; i2++) {
+                    for(int p = 1; p < len; p++) {
+                        boolean noSwap = dp[i1][i2][p] && dp[i1 + p][i2 + p][len - p];
+                        if(noSwap) {
+                            dp[i1][i2][len] = true;
+                            break;
+                        }
+
+                        boolean swap = dp[i1][i2 + len - p][p] && dp[i1 + p][i2][len - p];
+                        if(swap) {
+                            dp[i1][i2][len] = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return dp[0][0][n];
+    }
+
+    public boolean ScrambledStringTabulationOptimization(String s1, String s2) {
+        int n = s1.length();
+
+        boolean[][][] dp = new boolean[n][n][n + 1];
+
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                if(s1.charAt(i) == s2.charAt(j)) {
+                    dp[i][j][1] = true;
+                }
+            }
+        }
+
+        for(int len = 2; len <= n; len++) {
+            for(int i1 = 0; i1 <= n - len; i1++) {
+                for(int i2 = 0; i2 <= n - len; i2++) {
+                    // ----------------------------
+                    // Optimization 1:
+                    // Are the substrings already identical?
+                    // ----------------------------
+                    boolean same = true;
+
+                    for(int k = 0; k < len; k++) {
+                        if(s1.charAt(i1 + k) != s2.charAt(i2 + k)) {
+                            same = false;
+                            break;
+                        }
+                    }
+
+                    if(same) {
+                        dp[i1][i2][len] = true;
+                        continue;
+                    }
+                    // ----------------------------
+                    // Optimization 2:
+                    // Character frequency pruning
+                    // ----------------------------
+
+                    int[] freq = new int[26];
+
+                    for (int k = 0; k < len; k++) {
+                        freq[s1.charAt(i1 + k) - 'a']++;
+                        freq[s2.charAt(i2 + k) - 'a']--;
+                    }
+
+                    boolean valid = true;
+
+                    for (int x : freq) {
+                        if (x != 0) {
+                            valid = false;
+                            break;
+                        }
+                    }
+
+                    if (!valid)
+                        continue;
+
+                    // ----------------------------
+                    // Actual DP transition
+                    // ----------------------------
+                    for(int p = 1; p < len; p++) {
+                        boolean noSwap = dp[i1][i2][p] && dp[i1 + p][i2 + p][len - p];
+                        if(noSwap) {
+                            dp[i1][i2][len] = true;
+                            break;
+                        }
+
+                        boolean swap = dp[i1][i2 + len - p][p] && dp[i1 + p][i2][len - p];
+                        if(swap) {
+                            dp[i1][i2][len] = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return dp[0][0][n];
+    }
+
+
+
 }
 
 public class DPOnPartition {
@@ -533,6 +737,7 @@ public class DPOnPartition {
         System.out.println(dp.ballonBurstTabulation( new int[]{3,1,5,8}));
 
         System.out.println(dp.isPalindrome("aaa"));
+        System.out.println("Longest Palindrome: " + dp.LongestPalindromeString("babad"));
 
         System.out.println(dp.PalindromePartitioning2("aab"));
         System.out.println(dp.palindromePartitioningTabulation("aab"));
@@ -540,5 +745,10 @@ public class DPOnPartition {
         System.out.println(dp.EvaluateBooleanExpression("F|T^F"));
         System.out.println(dp.EvaluateBooleanExpressionMemo("F|T^F"));
         System.out.println(dp.EvaluateBooleanExpressionTabulation("F|T^F"));
+
+        System.out.println(dp.ScrambleString("abcde", "caebd"));
+        System.out.println(dp.ScrambledStringMemo("great", "rgeat"));
+        System.out.println(dp.ScrambledStringTabulation("great", "rgeat"));
+        System.out.println(dp.ScrambledStringTabulationOptimization("great", "rgeat"));
     }
 }
