@@ -1,4 +1,4 @@
-package RevisitArrays.ClaudeRevision;
+package Claude75;
 
 import java.util.Arrays;
 
@@ -152,6 +152,53 @@ class ArraysRevisionByClaude{
 
         System.out.println(Arrays.toString(nums));
     }
+
+    public boolean isSumOfTwoPrimes(int n) {
+        if(n < 4) return false;
+        boolean[] prime = new boolean[n+1];
+        Arrays.fill(prime, true);
+        prime[0] = false;
+        prime[1] = false;
+
+        for(int i = 2; i*i <= n; i++){
+            if(prime[i]) {
+                for(int j = i*i; j <= n; j+=i){
+                    prime[j] = false;
+                }
+            }
+        }
+
+        for(int i = 2; i <= n/2; i++) {
+            if(prime[i] && prime[n - i]) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    private boolean isPrime(int x) {
+        if(x < 2) return false;
+
+        for(int i = 2; i <= Math.sqrt(x); i++) {
+            if(x % i == 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean isSumOfTwoPrimes2(int n) {
+        for(int i = 2; i <= n/2; i++) {
+            if(isPrime(i) && isPrime(n - i)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
 
 public class ClaudeArrays {
